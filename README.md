@@ -3,6 +3,7 @@ How to run:
     git clone https://github.com/i6od/Voice-to-Voice-Ooba
 
     pip install -r requirements.txt
+- Run the "Start.bat" file
 
 - Tune into my youtube channel to catch me livestreaming or for random youtube videos:
 https://www.youtube.com/channel/UCijeFO61NKPq4piT7qN8taw
