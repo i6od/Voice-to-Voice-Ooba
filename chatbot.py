@@ -1,6 +1,3 @@
-
-# Import necessary libraries
-import os
 from pickle import TRUE
 import re
 import json
@@ -10,17 +7,19 @@ import traceback
 import aispeech
 import wave
 
+import transcribe
+message_log = []
+AI_RESPONSE_FILENAME = 'ai-response.txt'
+logging_eventhandlers = []
 
 
-
-
-def ooba_api(user_input):
-            print(f"Sending: {user_input} to OOBABOOGA API")
-            
-            
-            uri = 'http://127.0.0.1:5000/api/v1/chat'
-
-            request = {
+def send_user_input(user_input):
+    global message_log
+    print(message_log)
+    log_message(f"User: {user_input}")
+    message_log.append({"role": "user", "content": user_input})
+    uri = 'http://127.0.0.1:5000/api/v1/chat'
+    request = {
                 'user_input': user_input,
                 'max_new_tokens': 50,
                 'auto_max_new_tokens': False,
@@ -74,17 +73,21 @@ def ooba_api(user_input):
                 'skip_special_tokens': True,
                 'stopping_strings': ["\n\n", "Observation:"]
                 }
-            response = requests.post(uri, json=request)
-            if response.status_code == 200:
-                    result = response.json()['results'][0]['history']
+    response = requests.post(uri, json=request)
+    if response.status_code == 200:
+        result = response.json()['results'][0]['history']
                     
-                    text = result["visible"][0][1]
-                    print('Sending Ai Response to Generate Speech')
+        text = result["visible"][0][1]
+        log_message(f'{text}')
+        aispeech.initialize(text)
+        time.sleep(0.1)
+        
                     
-                    aispeech.oobaapi(text)
+        
 
-                    time.sleep(0.1)
 
-if __name__ == '__main__':
-
-    ooba_api()
+def log_message(message_text):
+    print(message_text)
+    global logging_eventhandlers
+    for eventhandler in logging_eventhandlers:
+        eventhandler(message_text)
