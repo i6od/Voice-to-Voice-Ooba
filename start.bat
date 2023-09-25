@@ -1,4 +1,4 @@
 @echo off
 echo Loading...
-python "transcribe.py"
+python "UI.py"
 @pause
