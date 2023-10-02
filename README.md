@@ -1,4 +1,8 @@
 How to run:
+Requirements
+Install oobaboogawebui
+Install Python 3.10
+Install FFMPEG and Path it in Edit Variables
 
     git clone https://github.com/i6od/Voice-to-Voice-Ooba
 
