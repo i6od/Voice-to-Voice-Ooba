@@ -31,7 +31,7 @@ params = {
 
 # why is it called oobapi for a function?????
 
-def oobaapi(text):
+def initialize(text):
         content = text
         
         model, example_text = torch.hub.load(repo_or_dir='snakers4/silero-models', model='silero_tts', language=params['language'], speaker=params['model_id'])
