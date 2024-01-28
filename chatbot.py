@@ -23,6 +23,7 @@ def send_user_input(user_input):
     headers = {"Content-Type": "application/json"}
     json = {
             "messages": [
+                {"role": "system", "content": f"You are an ai assistant"},
                 {"role": "user", "content": f"{user_input}"}
             ],
             "history": f"{history}",
@@ -35,7 +36,7 @@ def send_user_input(user_input):
     response = requests.post(url, headers=headers, json=json)
     if response.status_code == 200:
         result = response.json()['choices'][0]['message']['content']
-        history.append({"role": "assistant", "content": result } )
+        history.append({"role": "system", "content": result } )
         history.append({"role": "user", "content": user_input } )
         text = result
         log_message(f'{text}')
